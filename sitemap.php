@@ -1,8 +1,8 @@
 <?php
 // Code by Clovis Darrigan - https://darrigan.net
 // Date: 05/07/2022
-// Version: 1.0.0
-// PHP script generating a sitemaps.xml file in Pawtucket root.
+// Version: 1.0.1
+// PHP script generating a sitemap.xml file in Pawtucket root.
 // Extract informations directly from SQL database for Collections, Objects, Places, Occurrences, Entities.
 
 $connection = new mysqli("127.0.0.1","your_database","your_password") or die("Connection error.");
@@ -11,9 +11,9 @@ if ($connection->connect_error) {
 	die('Connection error: ' . $connection->connect_error);
 }
 
-// *** Settings for sitemaps ***
+// *** Settings for sitemap ***
 
-// Absolute path to the folder where the sitemaps.xml file will be created (should be Pawtucket root)
+// Absolute path to the folder where the sitemap.xml file will be created (should be Pawtucket root)
 $absolute_path = "/var/www/to/your/pawtucket/";
 
 // URL root for your public website (Pawtucket root) including index.php
@@ -22,7 +22,7 @@ $URL_root = "https://your.public.website.org/index.php";
 // Settings for items:
 // - Changefreq_* is a string in {always;hourly;daily;weekly;monthly;yearly;never} (Google won't consider it)
 // - Priority_* is a real number between 0.0 and 1.0 (Google won't consider it)
-// - Skip_* is a list of items which will be ignored (not included in sitemaps.xml). Enter unique IDs like: "'30','32'". Default must be "'0'".
+// - Skip_* is a list of items which will be ignored (not included in sitemap.xml). Enter unique IDs like: "'30','32'". Default must be "'0'".
 
 // Collections
 $Priority_Collections = "0.8" ;
@@ -295,10 +295,10 @@ echo "Entities URL: $i\n";
 $xml .=  "</urlset>";
 
 // Write xml file
-$file = fopen($absolute_path."sitemaps.xml", "w");
+$file = fopen($absolute_path."sitemap.xml", "w");
 fwrite($file,$xml);
 fclose($file);
-echo "\nTotal URL in sitemaps: $count\n";
+echo "\nTotal URL in sitemap: $count\n";
 if ($count > 50000) echo "\nTotal number of URL should not be > 50000.\n";
 
 // *** End ***
