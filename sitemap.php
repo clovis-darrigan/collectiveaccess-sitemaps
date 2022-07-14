@@ -298,8 +298,9 @@ $xml .=  "</urlset>";
 $file = fopen($absolute_path."sitemap.xml", "w");
 fwrite($file,$xml);
 fclose($file);
-echo "\nTotal URL in sitemap: $count\n";
+echo "\nTotal URLs in sitemap: $count\n";
 if ($count > 50000) echo "\nTotal number of URL should not be > 50000.\n";
+echo "\nDate: ".date('Y-m-dTH:i:sP')."\n";
 
 // *** End ***
 ?>
