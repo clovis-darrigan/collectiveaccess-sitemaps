@@ -2,7 +2,8 @@
 PHP script generating a sitemap.xml file in Pawtucket's root.
 Extract informations directly from SQL database for Collections, Objects, Places, Occurrences, Entities.
 
-1. Edit the file to replace "your_database" by the real name of your database, "your_password" by the real password, and 127.0.0.1 by your server. Edit $absolute_path and $URL_root.
+1. Edit the file to define parameters for SQL connection. You can copy/paste these lines from setup.php file.
+   Edit $absolute_path and $URL_root.
 
 2. Choose your settings for generating the sitemap.xml file. Read comments in the file.
 
