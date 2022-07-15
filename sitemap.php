@@ -1,23 +1,26 @@
 <?php
 // Code by Clovis Darrigan - https://darrigan.net
 // Date: 05/07/2022
-// Version: 1.0.1
-// PHP script generating a sitemap.xml file in Pawtucket root.
+// Version: 1.0.2
+// PHP script generating a sitemap.xml file in Pawtucket's root.
 // Extract informations directly from SQL database for Collections, Objects, Places, Occurrences, Entities.
-
-$connection = new mysqli("127.0.0.1","your_database","your_password") or die("Connection error.");
-$connection->select_db("collections");
-if ($connection->connect_error) {
-	die('Connection error: ' . $connection->connect_error);
-}
 
 // *** Settings for sitemap ***
 
+// Copy here parameters for SQL connection from the beginning of setup.php file
+define("__CA_DB_HOST__", '127.0.0.1');
+# __CA_DB_USER__ = Database login user name
+define("__CA_DB_USER__", 'YourDatabaseLogin');
+# __CA_DB_PASSWORD__ = Database login password
+define("__CA_DB_PASSWORD__", 'YourPassword');
+# __CA_DB_DATABASE__ = The name of your CollectiveAccess database
+define("__CA_DB_DATABASE__", 'YourDatabase');
+
 // Absolute path to the folder where the sitemap.xml file will be created (should be Pawtucket root)
-$absolute_path = "/var/www/to/your/pawtucket/";
+$absolute_path = "/var/www/collections/pub/";
 
 // URL root for your public website (Pawtucket root) including index.php
-$URL_root = "https://your.public.website.org/index.php";
+$URL_root = "https://collections.univ-pau.fr/pub/index.php";
 
 // Settings for items:
 // - Changefreq_* is a string in {always;hourly;daily;weekly;monthly;yearly;never} (Google won't consider it)
@@ -50,6 +53,13 @@ $Changefreq_Entities = "monthly" ;
 $Skip_Entities = "'0'";
 // *** End of settings ***
 
+
+// *** Connection to SQL database ***
+$connection = new mysqli(__CA_DB_HOST__,__CA_DB_USER__,__CA_DB_PASSWORD__) or die("Connection error.");
+$connection->select_db(__CA_DB_DATABASE__);
+if ($connection->connect_error) {
+	die('Connection error: ' . $connection->connect_error);
+}
 
 // *** Generating xml file ***
 // File header
@@ -131,7 +141,7 @@ else
 	}
 }
 $res->close();
-echo "Collections URL: $i\n";
+echo "Collections URLs: $i\n";
 
 
 // Objects
@@ -170,7 +180,7 @@ else
 	}
 }
 $res->close();
-echo "Objects URL: $i\n";
+echo "Objects URLs: $i\n";
 
 
 // Places
@@ -209,7 +219,7 @@ else
 	}
 }
 $res->close();
-echo "Places URL: $i\n";
+echo "Places URLs: $i\n";
 
 
 // Occurrences
@@ -248,7 +258,7 @@ else
 	}
 }
 $res->close();
-echo "Occurrences URL: $i\n";
+echo "Occurrences URLs: $i\n";
 
 
 // Entities
@@ -287,19 +297,21 @@ else
 	}
 }
 $res->close();
-echo "Entities URL: $i\n";
+echo "Entities URLs: $i\n";
 
 
 
 // File footer
 $xml .=  "</urlset>";
 
-// Write xml file
+// *** End of generating xml file ***
+
+// *** Write xml file ***
 $file = fopen($absolute_path."sitemap.xml", "w");
 fwrite($file,$xml);
 fclose($file);
 echo "\nTotal URLs in sitemap: $count\n";
-if ($count > 50000) echo "\nTotal number of URL should not be > 50000.\n";
+if ($count > 50000) echo "\nTotal number of URLs should not be > 50000.\n";
 echo "\nDate: ".date('Y-m-dTH:i:sP')."\n";
 
 // *** End ***
