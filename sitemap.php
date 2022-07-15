@@ -1,6 +1,6 @@
 <?php
 // Code by Clovis Darrigan - https://darrigan.net
-// Date: 05/07/2022
+// Date: 15/07/2022
 // Version: 1.0.2
 // PHP script generating a sitemap.xml file in Pawtucket's root.
 // Extract informations directly from SQL database for Collections, Objects, Places, Occurrences, Entities.
